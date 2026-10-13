@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kokoro Tab — 82M-param TTS in your browser</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>🔊 Kokoro Tab</h1>
+    <p class="sub">A frontier 82M-parameter TTS model, running entirely in this tab.
+    No server. No API key. Nothing leaves your machine.</p>
+  </header>
+
+  <section class="card">
+    <label for="text">Text to speak</label>
+    <textarea id="text" rows="4">A browser tab now runs an 82-million-parameter text-to-speech model — the same compute that needed a datacenter GPU two years ago.</textarea>
+
+    <div class="row">
+      <div class="field">
+        <label for="voice">Voice</label>
+        <select id="voice"></select>
+      </div>
+      <div class="field slim">
+        <label for="speed">Speed <span id="speed-val">1.0×</span></label>
+        <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
+      </div>
+      <button id="go" class="primary">Generate</button>
+    </div>
+
+    <div id="progress-wrap" hidden>
+      <div class="progress-label"><span id="progress-file">loading…</span><span id="progress-pct"></span></div>
+      <div class="bar"><div id="progress-fill"></div></div>
+    </div>
+
+    <div id="tffa" class="tffa" hidden>
+      <span id="tffa-ms">—</span><span class="tffa-label">ms time-to-first-audio</span>
+      <p class="tffa-note" id="tffa-note">(first run includes the ~86 MB model download — cached by your browser after)</p>
+    </div>
+
+    <audio id="player" controls></audio>
+    <p id="status" class="status" role="status"></p>
+  </section>
+
+  <section class="card how">
+    <h2>How it works</h2>
+    <ul>
+      <li><strong>82M parameters</strong> — Kokoro is a frontier-quality TTS at tiny scale.</li>
+      <li><strong>ONNX q8 → WASM</strong> — ~86 MB quantized model via ONNX Runtime Web, executed on your CPU.</li>
+      <li><strong>Everything local</strong> — text is phonemized and synthesized in-tab; audio never leaves your machine.</li>
+      <li><strong>24 kHz WAV</strong> — generated as float samples, played straight from a blob URL.</li>
+    </ul>
+    <p class="attrib">
+      Model: <a href="https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX" target="_blank" rel="noopener">onnx-community/Kokoro-82M-v1.0-ONNX</a> ·
+      Lib: <a href="https://www.npmjs.com/package/kokoro-js" target="_blank" rel="noopener">kokoro-js</a> ·
+      Code: <a href="https://github.com/iamdgarcia/kokoro-tab" target="_blank" rel="noopener">iamdgarcia/kokoro-tab</a> ·
+      Built by <a href="https://huggingface.co/iamdgarcia" target="_blank" rel="noopener">iamdgarcia</a>
+    </p>
+  </section>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>
